@@ -12,50 +12,53 @@ class Solution {
     void insertUniq(vector<int> &res, int element) {
     if (res.empty() || res.back() != element) 
         res.push_back(element);
-    
     }
 
     vector<int> findUnion(vector<int> &a, vector<int> &b) {
         // Your code here
         // return vector with correct order of elements
+        
+        // As the arrays are already sorted two point approach will be good
         vector<int> res;
         
-        int n = a.size();
-        int m = b.size();
-        
-        int i =0;
-        int j=0;
+        int n = a.size(),m = b.size();
+        int i =0,j=0;
         
         while(i<n && j<m){
             // cout<<i<<j<<"now\n";
             if(a[i]==b[j]){
                 insertUniq(res,a[i]);
-                i++;
-                j++;
+                i++;j++;
             }
             else if(a[i]>b[j]){
                 insertUniq(res,b[j]);
                 j++;
-                
             }
-            else if(a[i]<b[j]){
+            else{
                 insertUniq(res,a[i]);
                 i++;
             }
         }
         
         while(i<n){
-            insertUniq(res,a[i]);
-                i++;
+            insertUniq(res,a[i++]);
         }
         while(j<m){
-            insertUniq(res,b[j]);
-            j++;
+            insertUniq(res,b[j++]);
         }
-        // cout<<i<<j
-        
-        
         return res;
+        
+        // TC: O(n+m)
+        //----------------------------------------------------
+        // If arrays are not sorted
+        
+        // set<int> s(a.begin(), a.end());
+        // s.insert(b.begin(), b.end());
+
+        // return vector<int>(s.begin(), s.end());
+        
+        // TC: O(nlogn + mlogm)
+        
     }
 };
 
